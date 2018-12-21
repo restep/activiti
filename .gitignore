@@ -1,0 +1,13 @@
+#idea
+*.iml
+*.idea
+
+#eclipse
+bin
+target
+out
+lib
+*.settings
+*.project
+*.classpath
+*.class
