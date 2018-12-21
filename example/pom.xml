@@ -83,10 +83,9 @@
             <artifactId>cxf-rt-transports-http</artifactId>
         </dependency>
 
-        <!-- 测试依赖-h2内置数据库 -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
         <!-- 单元测试-Junit -->
