@@ -19,7 +19,7 @@ public class SayHelloToLeaveTest extends AbstractTest {
     @Test
     public void startProcessTest() {
         Deployment deployment = repositoryService.createDeployment()
-                .addInputStream("SayHelloToLeave.bpmn", this.getClass().getClassLoader().getResourceAsStream("ch02/helloworld/SayHelloToLeave.bpmn"))
+                .addInputStream("SayHelloToLeave.bpmn", this.getClass().getClassLoader().getResourceAsStream("ch02/SayHelloToLeave.bpmn"))
                 .deploy();
 
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()

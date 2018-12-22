@@ -14,7 +14,7 @@ public class VerySimpleLeaveProcessTest extends AbstractTest {
     @Test
     public void startProcessTest() throws Exception {
         //部署流程定义文件
-        repositoryService.createDeployment().addClasspathResource("ch02/helloworld/sayhelloleave.bpmn").deploy();
+        repositoryService.createDeployment().addClasspathResource("ch02/sayhelloleave.bpmn").deploy();
 
         //验证已部署流程定义
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
