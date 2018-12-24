@@ -42,14 +42,12 @@
         <dependency>
             <groupId>org.jodd</groupId>
             <artifactId>jodd</artifactId>
-            <version>3.3.2</version>
         </dependency>
 
         <!-- 依赖Groovy，Activiti的Script Task为groovy时需要第三方的支持 -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>1.8.6</version>
         </dependency>
 
         <!-- LOGGING begin -->
@@ -75,8 +73,6 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>${cxf.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>

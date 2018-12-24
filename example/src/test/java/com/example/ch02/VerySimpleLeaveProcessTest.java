@@ -1,6 +1,6 @@
-package com.restep.ch02;
+package com.example.ch02;
 
-import com.restep.activiti.AbstractTest;
+import com.example.activiti.AbstractTest;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.Assert;

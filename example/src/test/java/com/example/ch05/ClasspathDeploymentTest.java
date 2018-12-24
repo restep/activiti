@@ -1,8 +1,6 @@
-package com.restep.ch05;
+package com.example.ch05;
 
-import com.restep.activiti.AbstractTest;
-import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.impl.interceptor.CommandContext;
+import com.example.activiti.AbstractTest;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;

@@ -1,9 +1,8 @@
-package com.restep.ch05;
+package com.example.ch05;
 
-import com.restep.activiti.AbstractTest;
+import com.example.activiti.AbstractTest;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.After;

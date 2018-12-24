@@ -1,4 +1,4 @@
-package com.restep.activiti;
+package com.example.activiti;
 
 import org.activiti.engine.*;
 import org.junit.Before;
