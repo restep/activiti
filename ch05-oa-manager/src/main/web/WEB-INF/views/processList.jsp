@@ -40,12 +40,12 @@
             <td>${processDefinition.key }</td>
             <td>${processDefinition.version }</td>
             <td><a target="_blank"
-                   href='${ctx }/ch05/read-resource?pdid=${processDefinition.id }&resourceName=${processDefinition.resourceName }'>${processDefinition.resourceName }</a>
+                   href='${ctx }/ch05/readResource?processDefinitionId=${processDefinition.id }&resourceName=${processDefinition.resourceName }'>${processDefinition.resourceName }</a>
             </td>
             <td><a target="_blank"
-                   href='${ctx }/ch05/read-resource?pdid=${processDefinition.id }&resourceName=${processDefinition.diagramResourceName }'>${processDefinition.diagramResourceName }</a>
+                   href='${ctx }/ch05/readResource?processDefinitionId=${processDefinition.id }&resourceName=${processDefinition.diagramResourceName }'>${processDefinition.diagramResourceName }</a>
             </td>
-            <td><a target="_blank" href='${ctx }/ch05/deleteDeployment?deploymentId=${pd.deploymentId }'>删除</a></td>
+            <td><a target="_blank" href='${ctx }/ch05/deleteDeployment?deploymentId=${processDefinition.deploymentId }'>删除</a></td>
         </tr>
     </c:forEach>
     </tbody>
