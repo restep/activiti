@@ -1,5 +1,6 @@
-package com.ch05.controller;
+package com.activiti.ch05.controller;
 
+import com.activiti.controller.AbstractController;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
@@ -32,7 +33,7 @@ public class DeploymentController extends AbstractController {
     @RequestMapping(value = "/processList")
     public ModelAndView processList() {
         //对应WEB-INF/views/ch05/processList.jsp
-        ModelAndView modelAndView = new ModelAndView("processList");
+        ModelAndView modelAndView = new ModelAndView("ch05/processList");
         List<ProcessDefinition> processDefinitionList = repositoryService.createProcessDefinitionQuery().list();
         modelAndView.addObject("processDefinitionList", processDefinitionList);
 
@@ -71,7 +72,7 @@ public class DeploymentController extends AbstractController {
             e.printStackTrace();
         }
 
-        return "redirect:processList";
+        return "redirect:ch05/processList";
     }
 
     /**
@@ -112,7 +113,7 @@ public class DeploymentController extends AbstractController {
     public String deleteDeployment(@RequestParam("deploymentId") String deploymentId) {
         repositoryService.deleteDeployment(deploymentId, true);
 
-        return "redirect:processList";
+        return "redirect:ch05/processList";
     }
 }
 

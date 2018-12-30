@@ -1,4 +1,4 @@
-package com.ch05.util;
+package com.activiti.util;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
