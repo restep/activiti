@@ -72,7 +72,7 @@ public class DeploymentController extends AbstractController {
             e.printStackTrace();
         }
 
-        return "redirect:ch05/processList";
+        return "redirect:processList";
     }
 
     /**
@@ -113,7 +113,7 @@ public class DeploymentController extends AbstractController {
     public String deleteDeployment(@RequestParam("deploymentId") String deploymentId) {
         repositoryService.deleteDeployment(deploymentId, true);
 
-        return "redirect:ch05/processList";
+        return "redirect:processList";
     }
 }
 
