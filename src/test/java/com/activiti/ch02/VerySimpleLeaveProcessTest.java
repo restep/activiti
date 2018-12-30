@@ -1,6 +1,7 @@
-package com.example.ch02;
+package com.activiti.ch02;
 
-import com.example.activiti.AbstractTest;
+import com.activiti.activiti.AbstractTest;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.junit.Assert;
@@ -14,14 +15,17 @@ public class VerySimpleLeaveProcessTest extends AbstractTest {
     @Test
     public void startProcessTest() throws Exception {
         //部署流程定义文件
-        repositoryService.createDeployment().addClasspathResource("ch02/sayhelloleave.bpmn").deploy();
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource("ch02/sayhelloleave.bpmn").deploy();
 
         //验证已部署流程定义
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .deploymentId(deployment.getId()).singleResult();
         Assert.assertNotNull(processDefinition);
 
         //启动流程并返回流程实例
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("leavesayhello");
+        ProcessInstance processInstance = runtimeService.
+                startProcessInstanceByKey("leavesayhello");
         Assert.assertNotNull(processInstance);
     }
 }

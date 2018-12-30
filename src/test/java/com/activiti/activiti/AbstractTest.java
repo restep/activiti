@@ -1,4 +1,4 @@
-package com.example.activiti;
+package com.activiti.activiti;
 
 import org.activiti.engine.*;
 import org.junit.Before;

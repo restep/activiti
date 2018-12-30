@@ -1,8 +1,10 @@
-package com.example.ch05;
+package com.activiti.ch05;
 
-import com.example.activiti.AbstractTest;
+import com.activiti.activiti.AbstractTest;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.After;
@@ -45,14 +47,20 @@ public class UserAndGroupInUserTaskTest extends AbstractTest {
     @Test
     public void userAndGroupInUserTask() {
         //部署流程
-        repositoryService.createDeployment().addClasspathResource("ch05/userAndGroupInUserTask.bpmn").deploy();
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource("ch05/userAndGroupInUserTask.bpmn").deploy();
+
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .deploymentId(deployment.getId()).singleResult();
 
         //启动流程
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userAndGroupInUserTask");
+        ProcessInstance processInstance = runtimeService.
+                startProcessInstanceByKey(processDefinition.getKey());
         Assert.assertNotNull(processInstance);
 
         //根据角色查询任务
-        Task task = taskService.createTaskQuery().taskCandidateUser("restep").singleResult();
+        Task task = taskService.createTaskQuery()
+                .taskCandidateUser("restep").singleResult();
         taskService.claim(task.getId(), "restep");
         taskService.complete(task.getId());
     }
@@ -70,22 +78,26 @@ public class UserAndGroupInUserTaskTest extends AbstractTest {
         identityService.createMembership("zhangsan", "deptLeader");
 
         //启动流程
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("userAndGroupInUserTask");
+        ProcessInstance processInstance = runtimeService.
+                startProcessInstanceByKey("userAndGroupInUserTask");
         Assert.assertNotNull(processInstance);
 
         //将zhangsan作为候选人
-        Task zhangsanTask = taskService.createTaskQuery().taskCandidateUser("zhangsan").singleResult();
+        Task zhangsanTask = taskService.createTaskQuery()
+                .taskCandidateUser("zhangsan").singleResult();
         Assert.assertNotNull(zhangsanTask);
 
         //将restep作为候选人
-        Task restepTask = taskService.createTaskQuery().taskCandidateUser("restep").singleResult();
+        Task restepTask = taskService.createTaskQuery().taskCandidateUser("restep")
+                .singleResult();
         Assert.assertNotNull(restepTask);
 
         //zhangsan签收任务
         taskService.claim(zhangsanTask.getId(), "zhangsan");
 
         //查询restep是否拥有刚刚的候选人物
-        restepTask = taskService.createTaskQuery().taskCandidateUser("restep").singleResult();
+        restepTask = taskService.createTaskQuery().
+                taskCandidateUser("restep").singleResult();
         Assert.assertNull(restepTask);
     }
 }

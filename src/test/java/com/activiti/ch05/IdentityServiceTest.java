@@ -1,6 +1,6 @@
-package com.example.ch05;
+package com.activiti.ch05;
 
-import com.example.activiti.AbstractTest;
+import com.activiti.activiti.AbstractTest;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.junit.Assert;

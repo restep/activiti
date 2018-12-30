@@ -1,7 +1,7 @@
-package com.example.ch05;
+package com.activiti.ch05;
 
-import com.example.activiti.AbstractTest;
-import org.activiti.engine.repository.DeploymentBuilder;
+import com.activiti.activiti.AbstractTest;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.junit.Assert;
@@ -16,18 +16,15 @@ import java.util.*;
 public class ClasspathDeploymentTest extends AbstractTest {
     @Test
     public void classpathDeployment() {
-        //定义classpath
-        String bpmnClasspath = "ch05/candidateUserInUserTask.bpmn";
-        String pngClasspath = "ch05/candidateUserInUserTask.png";
-
         //部署
-        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
-        deploymentBuilder.addClasspathResource(bpmnClasspath).addClasspathResource(pngClasspath).deploy();
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource("ch05/candidateUserInUserTask.bpmn")
+                .addClasspathResource("ch05/candidateUserInUserTask.png").deploy();
+        Assert.assertNotNull(deployment);
 
         //验证流程定义是否部署成功
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionKey("candidateUserInUserTask")
-                .singleResult();
+                .deploymentId(deployment.getId()).singleResult();
         Assert.assertNotNull(processDefinition);
 
         Map<String, Object> vars = new HashMap<>();
@@ -35,7 +32,7 @@ public class ClasspathDeploymentTest extends AbstractTest {
         objList.add(new Date());
         vars.put("list", objList);
 
-        runtimeService.startProcessInstanceByKey("candidateUserInUserTask", vars);
+        runtimeService.startProcessInstanceByKey(processDefinition.getKey(), vars);
 
         List<Task> taskList = taskService.createTaskQuery().includeProcessVariables().list();
         Assert.assertNotNull(taskList);

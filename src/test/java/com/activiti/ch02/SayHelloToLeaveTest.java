@@ -1,6 +1,6 @@
-package com.example.ch02;
+package com.activiti.ch02;
 
-import com.example.activiti.AbstractTest;
+import com.activiti.activiti.AbstractTest;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -19,7 +19,9 @@ public class SayHelloToLeaveTest extends AbstractTest {
     @Test
     public void startProcessTest() {
         Deployment deployment = repositoryService.createDeployment()
-                .addInputStream("SayHelloToLeave.bpmn", this.getClass().getClassLoader().getResourceAsStream("ch02/SayHelloToLeave.bpmn"))
+                .addInputStream("ch02/SayHelloToLeave.bpmn",
+                        this.getClass().getClassLoader().
+                                getResourceAsStream("ch02/SayHelloToLeave.bpmn"))
                 .deploy();
 
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
@@ -30,10 +32,12 @@ public class SayHelloToLeaveTest extends AbstractTest {
         variables.put("applyUser", "employee1");
         variables.put("days", 3);
 
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SayHelloToLeave", variables);
+        ProcessInstance processInstance = runtimeService.
+                startProcessInstanceByKey("SayHelloToLeave", variables);
         Assert.assertNotNull(processInstance);
 
-        Task taskOfDeptLeader = taskService.createTaskQuery().taskCandidateGroup("deptLeader").singleResult();
+        Task taskOfDeptLeader = taskService.createTaskQuery()
+                .taskCandidateGroup("deptLeader").singleResult();
         Assert.assertNotNull(taskOfDeptLeader);
 
         taskService.claim(taskOfDeptLeader.getId(), "leaderUser");
@@ -41,10 +45,12 @@ public class SayHelloToLeaveTest extends AbstractTest {
         variables.put("approved", true);
         taskService.complete(taskOfDeptLeader.getId(), variables);
 
-        taskOfDeptLeader = taskService.createTaskQuery().taskCandidateGroup("deptLeader").singleResult();
+        taskOfDeptLeader = taskService.createTaskQuery()
+                .taskCandidateGroup("deptLeader").singleResult();
         Assert.assertNull(taskOfDeptLeader);
 
-        long count = historyService.createHistoricProcessInstanceQuery().finished().count();
+        long count = historyService.createHistoricProcessInstanceQuery()
+                .deploymentId(deployment.getId()).finished().count();
         Assert.assertNotNull(count);
     }
 }
