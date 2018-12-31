@@ -1,4 +1,4 @@
-package com.activiti.ch05.controller;
+package com.activiti.controller.ch05;
 
 import com.activiti.controller.AbstractController;
 import org.activiti.engine.repository.DeploymentBuilder;
