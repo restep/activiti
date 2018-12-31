@@ -37,11 +37,11 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li class="active"><a href="#" rel="main/welcome.action"><i class="icon-home icon-black"></i>首页</a></li>
-            <li><a href="#" rel="chapter6/task/list"><i class="icon-th-list icon-black"></i>任务列表</a></li>
+            <li><a href="${ctx}/ch06/task/list" rel=""><i class="icon-th-list icon-black"></i>任务列表</a></li>
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-th-large icon-black"></i>管理<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" rel='chapter5/process-list'>流程定义</a></li>
+                <li><a href="${ctx}/ch05/processList" rel=''>流程定义</a></li>
               </ul>
             </li>
           </ul>

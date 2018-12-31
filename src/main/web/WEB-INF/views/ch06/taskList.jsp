@@ -32,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${tasks }" var="task">
+			<c:forEach items="${taskList}" var="task">
 				<tr>
 					<td>${task.id }</td>
 					<td>${task.name }</td>

@@ -7,6 +7,7 @@ import org.activiti.engine.identity.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -18,6 +19,8 @@ import java.util.List;
  * @author restep
  * @date 2018/12/31
  */
+@Controller
+@RequestMapping("/user")
 public class UserController extends AbstractController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
