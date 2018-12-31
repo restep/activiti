@@ -63,7 +63,7 @@ public class IdentityServiceTest extends AbstractTest {
         //创建组对象
         Group group = identityService.newGroup("it");
         group.setName("IT部");
-        group.setType("administrator");
+        group.setType("it");
         identityService.saveGroup(group);
 
         //创建用户
@@ -76,9 +76,9 @@ public class IdentityServiceTest extends AbstractTest {
         identityService.createMembership("henry", "it");
 
         //创建组对象
-        group = identityService.newGroup("manager");
+        group = identityService.newGroup("deptLeader");
         group.setName("总经理室");
-        group.setType("manager");
+        group.setType("deptLeader");
         identityService.saveGroup(group);
 
         //创建用户
@@ -88,7 +88,7 @@ public class IdentityServiceTest extends AbstractTest {
         identityService.saveUser(user);
 
         //把用户加入到组
-        identityService.createMembership("bill", "manager");
+        identityService.createMembership("bill", "deptLeader");
 
         //创建组对象
         group = identityService.newGroup("hr");

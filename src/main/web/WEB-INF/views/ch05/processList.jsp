@@ -45,7 +45,10 @@
             <td><a target="_blank"
                    href='${ctx }/ch05/readResource?processDefinitionId=${processDefinition.id }&resourceName=${processDefinition.diagramResourceName }'>${processDefinition.diagramResourceName }</a>
             </td>
-            <td><a target="_blank" href='${ctx }/ch05/deleteDeployment?deploymentId=${processDefinition.deploymentId }'>删除</a></td>
+            <td>
+                <a target="_blank" href='${ctx }/ch05/deleteDeployment?deploymentId=${processDefinition.deploymentId }'>删除</a>
+                <a target="_blank" href='${ctx }/ch06/getForm/start/${processDefinition.id}'>启动</a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>

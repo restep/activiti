@@ -26,7 +26,7 @@
 		</c:if>
 	</h3>
 	<hr/>
-	<form action="${ctx }/chapter6/process-instance/start/${processDefinitionId}" class="form-horizontal" method="post">
+	<form action="${ctx }/ch06/processInstance/start/${processDefinitionId}" class="form-horizontal" method="post">
 		<c:if test="${hasStartFormKey}">
 		${startFormData}
 		</c:if>
