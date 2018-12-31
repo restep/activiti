@@ -61,27 +61,56 @@ public class IdentityServiceTest extends AbstractTest {
     @Test
     public void userAndGroupTest() {
         //创建组对象
-        Group group = identityService.newGroup("deptLeader");
-        group.setName("部门领导");
-        group.setType("assignment");
+        Group group = identityService.newGroup("it");
+        group.setName("IT部");
+        group.setType("administrator");
         identityService.saveGroup(group);
 
         //创建用户
-        User user = identityService.newUser("restep");
-        user.setFirstName("restep");
-        user.setLastName("feng");
-        user.setEmail("restep@163.com");
+        User user = identityService.newUser("henry");
+        user.setFirstName("henry");
+        user.setPassword("111111");
         identityService.saveUser(user);
 
         //把用户加入到组
-        identityService.createMembership("restep", "deptLeader");
+        identityService.createMembership("henry", "it");
+
+        //创建组对象
+        group = identityService.newGroup("manager");
+        group.setName("总经理室");
+        group.setType("manager");
+        identityService.saveGroup(group);
+
+        //创建用户
+        user = identityService.newUser("bill");
+        user.setFirstName("bill");
+        user.setPassword("111111");
+        identityService.saveUser(user);
+
+        //把用户加入到组
+        identityService.createMembership("bill", "manager");
+
+        //创建组对象
+        group = identityService.newGroup("hr");
+        group.setName("人事部");
+        group.setType("hr");
+        identityService.saveGroup(group);
+
+        //创建用户
+        user = identityService.newUser("jenny");
+        user.setFirstName("jenny");
+        user.setPassword("111111");
+        identityService.saveUser(user);
+
+        //把用户加入到组
+        identityService.createMembership("jenny", "hr");
 
         //查询组的用户
-        List<User> userList = identityService.createUserQuery().memberOfGroup("deptLeader").list();
+        List<User> userList = identityService.createUserQuery().memberOfGroup("hr").list();
         Assert.assertNotNull(userList);
 
         //查询用户的组
-        List<Group> groupList = identityService.createGroupQuery().groupMember("restep").list();
+        List<Group> groupList = identityService.createGroupQuery().groupMember("jenny").list();
         Assert.assertNotNull(groupList);
     }
 }

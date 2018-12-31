@@ -5,10 +5,24 @@
 				http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
-		<property name="databaseSchemaUpdate" value="true"/>
 		<property name="jdbcDriver" value="com.mysql.jdbc.Driver"/>
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/activiti?useUnicode=true&amp;characterEncoding=UTF-8"/>
 		<property name="jdbcUsername" value="root"/>
 		<property name="jdbcPassword" value="root"/>
+		<property name="databaseSchemaUpdate" value="true"/>
+
+		<!-- 自定义表单字段类型 -->
+		<property name="customFormTypes">
+			<list>
+				<bean class="com.activiti.form.JavascriptFormType"/>
+			</list>
+		</property>
+
+		<!-- 自定义表单引擎 -->
+		<property name="customFormEngines">
+			<list>
+				<bean class="com.activiti.form.MyFormEngine"></bean>
+			</list>
+		</property>
 	</bean>
 </beans>
