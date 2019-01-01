@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class DeploymentController extends AbstractController {
             e.printStackTrace();
         }
 
-        return "redirect:processList";
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "processList";
     }
 
     /**
@@ -113,7 +114,7 @@ public class DeploymentController extends AbstractController {
     public String deleteDeployment(@RequestParam("deploymentId") String deploymentId) {
         repositoryService.deleteDeployment(deploymentId, true);
 
-        return "redirect:processList";
+        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "processList";
     }
 }
 

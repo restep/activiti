@@ -42,10 +42,10 @@
 					<td>${task.assignee }</td>
 					<td>
 						<c:if test="${empty task.assignee }">
-							<a class="btn" href="${ctx}/ch06/claim/${task.id}"><i class="icon-eye-open"></i>签收</a>
+							<a class="btn" href="${ctx}/ch06/task/claim/${task.id}"><i class="icon-eye-open"></i>签收</a>
 						</c:if>
 						<c:if test="${not empty task.assignee }">
-							<a class="btn" href="${ctx}/ch06/getForm/${task.id}"><i class="icon-user"></i>办理</a>
+							<a class="btn" href="${ctx}/ch06/task/getForm/${task.id}"><i class="icon-user"></i>办理</a>
 						</c:if>
 					</td>
 				</tr>

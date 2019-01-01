@@ -19,7 +19,7 @@
 <body>
 	<h3>任务办理—[${hasFormKey ? task.name : taskFormData.task.name}]，流程定义ID：[${hasFormKey ? task.processDefinitionId : taskFormData.task.processDefinitionId}]</h3>
 	<hr/>
-	<form action="${ctx }/chapter6/task/complete/${hasFormKey ? task.id : taskFormData.task.id}" class="form-horizontal" method="post">
+	<form action="${ctx}/ch06/task/complete/${hasFormKey ? task.id : taskFormData.task.id}" class="form-horizontal" method="post">
 		<c:if test="${hasFormKey}">
 			${taskFormData}
 		</c:if>
