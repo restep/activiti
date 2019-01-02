@@ -1,4 +1,4 @@
-package com.activiti.ch07;
+package com.activiti.ch07.expression;
 
 import com.activiti.base.AbstractTest;
 import com.activiti.ch07.shared.ExpressionShared;

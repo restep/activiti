@@ -29,7 +29,7 @@
         </property>
     </bean>
 
-    <bean id="myBean" class="com.activiti.ch07.MyBean"/>
+    <bean id="myBean" class="com.activiti.ch07.expression.MyBean"/>
 
     <bean id="processEngineFactory" class="org.activiti.spring.ProcessEngineFactoryBean">
         <property name="processEngineConfiguration" ref="processEngineConfiguration"/>

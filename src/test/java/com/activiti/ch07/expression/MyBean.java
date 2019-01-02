@@ -1,4 +1,4 @@
-package com.activiti.ch07;
+package com.activiti.ch07.expression;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;

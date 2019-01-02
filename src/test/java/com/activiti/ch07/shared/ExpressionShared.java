@@ -1,6 +1,6 @@
 package com.activiti.ch07.shared;
 
-import com.activiti.ch07.MyBean;
+import com.activiti.ch07.expression.MyBean;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.RuntimeService;

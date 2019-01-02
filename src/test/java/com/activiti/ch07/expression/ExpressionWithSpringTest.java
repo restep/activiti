@@ -1,8 +1,9 @@
-package com.activiti.ch07;
+package com.activiti.ch07.expression;
 
 import com.activiti.ch07.shared.ExpressionShared;
 import org.activiti.engine.test.Deployment;
 import org.activiti.spring.impl.test.SpringActivitiTestCase;
+import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
@@ -16,6 +17,7 @@ public class ExpressionWithSpringTest extends SpringActivitiTestCase {
     /**
      * 必须以test开头
      */
+    @Test
     @Deployment(resources = "ch07/expression/expression.bpmn")
     public void testExpression() {
         ExpressionShared.expression(identityService, runtimeService,
