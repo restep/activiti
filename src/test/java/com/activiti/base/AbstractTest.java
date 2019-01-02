@@ -1,4 +1,4 @@
-package com.activiti.activiti;
+package com.activiti.base;
 
 import org.activiti.engine.*;
 import org.junit.Before;
@@ -20,7 +20,7 @@ public class AbstractTest {
     public void setUp() {
         ProcessEngineConfiguration configuration = ProcessEngineConfiguration.createStandaloneProcessEngineConfiguration();
         configuration.setJdbcDriver("com.mysql.jdbc.Driver");
-        configuration.setJdbcUrl("jdbc:mysql://localhost:3306/activiti?useUnicode=true&characterEncoding=UTF-8");
+        configuration.setJdbcUrl("jdbc:mysql://localhost:3306/base?useUnicode=true&characterEncoding=UTF-8");
         configuration.setJdbcUsername("root");
         configuration.setJdbcPassword("root");
 

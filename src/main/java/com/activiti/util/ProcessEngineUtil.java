@@ -12,7 +12,7 @@ public class ProcessEngineUtil {
 
     public static ProcessEngine getInstance() {
         if (null == processEngine) {
-            //使用默认的配置文件 activiti.cfg.xml
+            //使用默认的配置文件 base.cfg.xml
             processEngine = ProcessEngineConfiguration.createProcessEngineConfigurationFromResourceDefault().buildProcessEngine();
         }
 

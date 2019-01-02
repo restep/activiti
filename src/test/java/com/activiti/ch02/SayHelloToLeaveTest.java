@@ -1,6 +1,6 @@
 package com.activiti.ch02;
 
-import com.activiti.activiti.AbstractTest;
+import com.activiti.base.AbstractTest;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;

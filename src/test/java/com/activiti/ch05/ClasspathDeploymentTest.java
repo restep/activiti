@@ -1,6 +1,6 @@
 package com.activiti.ch05;
 
-import com.activiti.activiti.AbstractTest;
+import com.activiti.base.AbstractTest;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;

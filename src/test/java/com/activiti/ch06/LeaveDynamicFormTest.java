@@ -1,6 +1,6 @@
 package com.activiti.ch06;
 
-import com.activiti.activiti.AbstractTest;
+import com.activiti.base.AbstractTest;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.StartFormData;
 import org.activiti.engine.history.HistoricDetail;
