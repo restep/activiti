@@ -63,7 +63,7 @@ public class LeaveDynamicFormTest extends AbstractTest {
     public void javascriptFormTypeTest() {
         //部署流程定义文件
         Deployment deployment = repositoryService.createDeployment().
-                addClasspathResource("ch06/dynamicform/leave.bpmn").deploy();
+                addClasspathResource("ch06/leave.bpmn").deploy();
 
         //验证是否部署成功
         long count = repositoryService.createProcessDefinitionQuery().
