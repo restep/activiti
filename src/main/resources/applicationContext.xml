@@ -5,6 +5,9 @@
 						 http://www.springframework.org/schema/context   http://www.springframework.org/schema/context/spring-context-3.1.xsd
                            http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
+    <!-- 读取资源文件替换spring配置文件中的占位符 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/>
+
     <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
     <context:component-scan base-package="com.activiti">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -12,10 +15,10 @@
 
     <!-- 数据源 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/activiti?useUnicode=true&amp;characterEncoding=UTF-8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
     </bean>
 
     <!-- SessionFactory -->
@@ -48,7 +51,22 @@
         <property name="transactionManager" ref="transactionManager"/>
         <property name="databaseSchemaUpdate" value="true"/>
         <property name="jobExecutorActivate" value="false"/>
-        <property name="deploymentResources" value="classpath*:/ch09/counterSign.bpmn"></property>
+        <property name="deploymentResources" value="classpath*:/ch09/counterSign.zip"></property>
+
+        <!-- 自定义表单字段类型 -->
+        <property name="customFormTypes">
+            <list>
+                <bean class="com.activiti.form.JavascriptFormType"/>
+                <bean class="com.activiti.form.UsersFormType"/>
+            </list>
+        </property>
+
+        <!-- 自定义表单引擎 -->
+        <property name="customFormEngines">
+            <list>
+                <bean class="com.activiti.form.MyFormEngine"></bean>
+            </list>
+        </property>
     </bean>
 
     <!-- Activiti引擎工厂 -->
