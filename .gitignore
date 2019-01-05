@@ -11,3 +11,6 @@ lib
 *.project
 *.classpath
 *.class
+
+#activiti
+*.bpmn

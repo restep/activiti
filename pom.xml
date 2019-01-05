@@ -15,7 +15,6 @@
         <commons-io.version>2.4</commons-io.version>
         <slf4j.version>1.7.2</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
-        <mysql.version>5.1.18</mysql.version>
         <hibernate.version>4.1.4.Final</hibernate.version>
         <cxf.version>2.6.14</cxf.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -228,7 +227,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <version>5.1.18</version>
         </dependency>
 
         <!-- 单元测试-Junit -->
