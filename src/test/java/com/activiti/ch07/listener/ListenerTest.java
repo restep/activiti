@@ -1,7 +1,6 @@
 package com.activiti.ch07.listener;
 
 import org.activiti.engine.history.HistoricVariableInstance;
-import org.activiti.engine.impl.event.logger.handler.TaskAssignedEventHandler;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
