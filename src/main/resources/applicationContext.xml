@@ -48,7 +48,7 @@
         <property name="transactionManager" ref="transactionManager"/>
         <property name="databaseSchemaUpdate" value="true"/>
         <property name="jobExecutorActivate" value="false"/>
-        <property name="deploymentResources" value="classpath*:/ch07/leave.zip"></property>
+        <property name="deploymentResources" value="classpath*:/ch09/counterSign.bpmn"></property>
     </bean>
 
     <!-- Activiti引擎工厂 -->

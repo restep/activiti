@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author restep
@@ -66,5 +69,19 @@ public class UserController extends AbstractController {
     public String logout(HttpSession session) {
         session.removeAttribute("user");
         return "/login";
+    }
+
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public Map<String, List<User>> userList() {
+        List<Group> groupList = identityService.createGroupQuery().list();
+        Map<String, List<User>> map = new HashMap<>();
+        for (Group group : groupList) {
+            List<User> userList = identityService.createUserQuery()
+                    .memberOfGroup(group.getId()).list();
+            map.put(group.getName(), userList);
+        }
+
+        return map;
     }
 }
