@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * @author restep
  * @date 2019/1/5
  */
-@Component
 public class SignCompleteListener implements TaskListener {
     private static final long serialVersionUID = 6460623230080985382L;
 

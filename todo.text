@@ -1,2 +1,0 @@
-/resources/ch09/counterSign.zip
-org.activiti.engine.impl.javax.el.PropertyNotFoundException: Cannot resolve identifier 'signCompleteListener'
