@@ -40,13 +40,12 @@
         <div class="row">
             <h5>登录失败时 请运行com.activiti.ch05.IdentityServiceTest.userAndGroupTest</h5>
             <hr/>
-            <h4 class="text-info">用户与角色列表（密码：111111）</h4>
+            <h4 class="text-info">用户与部门列表（密码：111111）</h4>
             <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>用户名</th>
-                    <th>角色</th>
                     <th>部门</th>
                 </tr>
                 </thead>
@@ -54,20 +53,37 @@
                 <tr>
                     <td>1</td>
                     <td>henry</td>
-                    <td>系统管理员</td>
-                    <td>IT部</td>
+                    <td>IT</td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>bill</td>
-                    <td>总经理</td>
-                    <td>总经理室</td>
+                    <td>领导</td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>jenny</td>
-                    <td>人事经理</td>
-                    <td>人事部</td>
+                    <td>人事</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>houqin</td>
+                    <td>供货方</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>caiwu</td>
+                    <td>财务</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>boss</td>
+                    <td>总经理</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>chuna</td>
+                    <td>出纳</td>
                 </tr>
                 </tbody>
             </table>

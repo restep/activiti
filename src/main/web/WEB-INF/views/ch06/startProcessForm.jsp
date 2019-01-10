@@ -77,15 +77,23 @@
                 }
             %>
             <div class="control-group">
-                    <%-- 文本或者数字类型 --%>
-                <c:if test="${fp.type.name == 'string' || fp.type.name == 'long'}">
+                <%-- 文本或者数字类型 --%>
+                <c:if test="${fp.type.name == 'string' || fp.type.name == 'double' || fp.type.name == 'long'}">
                     <label class="control-label" for="${fp.id}">${fp.name}:</label>
                     <div class="controls">
                         <input type="text" id="${fp.id}" name="${fp.id}" data-type="${fp.type.name}" value=""/>
                     </div>
                 </c:if>
 
-                    <%-- 日期 --%>
+                <%-- 大文本 --%>
+                <c:if test="${fp.type.name == 'bigtext'}">
+                    <label class="control-label" for="${fp.id}">${fp.name}:</label>
+                    <div class="controls">
+                        <textarea id="${fp.id}" name="${fp.id}" data-type="${fp.type.name}" ${required}></textarea>
+                    </div>
+                </c:if>
+
+                <%-- 日期 --%>
                 <c:if test="${fp.type.name == 'date'}">
                     <label class="control-label" for="${fp.id}">${fp.name}:</label>
                     <div class="controls">
@@ -94,17 +102,16 @@
                     </div>
                 </c:if>
 
-                    <%-- Javascript --%>
+                <%-- Javascript --%>
                 <c:if test="${fp.type.name == 'javascript'}">
                     <script type="text/javascript">${fp.value};</script>
                 </c:if>
 
-                    <%-- 选择人员 --%>
+                <%-- 选择人员 --%>
                 <c:if test="${fp.type.name == 'userList'}">
                     <label class="control-label" for="${fp.id}">${fp.name}:</label>
                     <div class="controls">
-                        <input type="text" id="${fp.id}" name="${fp.id}" data-type="${fp.type.name}" class="users"
-                               readonly/>
+                        <input type="text" id="${fp.id}" name="${fp.id}" data-type="${fp.type.name}" class="users"/>
                     </div>
                 </c:if>
             </div>

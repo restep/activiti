@@ -16,6 +16,8 @@
 			<list>
 				<bean class="com.activiti.form.JavascriptFormType"/>
 				<bean class="com.activiti.form.UsersFormType"/>
+				<bean class="com.activiti.form.DoubleFormType"/>
+				<bean class="com.activiti.form.BigtextFormType"/>
 			</list>
 		</property>
 

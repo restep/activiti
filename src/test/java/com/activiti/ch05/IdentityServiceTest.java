@@ -105,12 +105,64 @@ public class IdentityServiceTest extends AbstractTest {
         //把用户加入到组
         identityService.createMembership("jenny", "hr");
 
-        //查询组的用户
-        List<User> userList = identityService.createUserQuery().memberOfGroup("hr").list();
-        Assert.assertNotNull(userList);
+        //创建组对象
+        group = identityService.newGroup("supportCrew");
+        group.setName("供货方");
+        group.setType("supportCrew");
+        identityService.saveGroup(group);
 
-        //查询用户的组
-        List<Group> groupList = identityService.createGroupQuery().groupMember("jenny").list();
-        Assert.assertNotNull(groupList);
+        //创建用户
+        user = identityService.newUser("houqin");
+        user.setFirstName("houqin");
+        user.setPassword("111111");
+        identityService.saveUser(user);
+
+        //把用户加入到组
+        identityService.createMembership("houqin", "supportCrew");
+
+        //创建组对象
+        group = identityService.newGroup("treasurer");
+        group.setName("财务");
+        group.setType("treasurer");
+        identityService.saveGroup(group);
+
+        //创建用户
+        user = identityService.newUser("caiwu");
+        user.setFirstName("caiwu");
+        user.setPassword("111111");
+        identityService.saveUser(user);
+
+        //把用户加入到组
+        identityService.createMembership("caiwu", "treasurer");
+
+        //创建组对象
+        group = identityService.newGroup("generalManager");
+        group.setName("总经理");
+        group.setType("generalManager");
+        identityService.saveGroup(group);
+
+        //创建用户
+        user = identityService.newUser("boss");
+        user.setFirstName("boss");
+        user.setPassword("111111");
+        identityService.saveUser(user);
+
+        //把用户加入到组
+        identityService.createMembership("boss", "generalManager");
+
+        //创建组对象
+        group = identityService.newGroup("cashier");
+        group.setName("出纳");
+        group.setType("cashier");
+        identityService.saveGroup(group);
+
+        //创建用户
+        user = identityService.newUser("chuna");
+        user.setFirstName("chuna");
+        user.setPassword("111111");
+        identityService.saveUser(user);
+
+        //把用户加入到组
+        identityService.createMembership("chuna", "cashier");
     }
 }

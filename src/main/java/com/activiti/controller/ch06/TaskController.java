@@ -80,7 +80,12 @@ public class TaskController extends AbstractController {
 
     @RequestMapping(value = "/task/complete/{taskId}")
     public String completeTask(@PathVariable("taskId") String taskId,
-                               HttpServletRequest request) {
+                               HttpServletRequest request,
+                               HttpSession session) {
+        // 设置当前操作人，对于调用活动可以获取到当前操作人
+        User user = SessionUtil.getUserFromSession(session);
+        identityService.setAuthenticatedUserId(user.getId());
+
         TaskFormData taskFormData = formService.getTaskFormData(taskId);
         String formKey = taskFormData.getFormKey();
         //从请求中获取表单字段的值

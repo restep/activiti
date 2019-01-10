@@ -18,7 +18,6 @@
 
             // 保存意见
             $('#saveComment').click(function () {
-                debugger;
                 if (!$('#comment').val()) {
                     return false;
                 }
@@ -37,7 +36,6 @@
          * @return {[type]} [description]
          */
         function readComments() {
-            debugger;
             $('#commentList ol').html('');
             // 读取意见
             $.getJSON('/ch09/comment/list/${hasFormKey ? task.processInstanceId : taskFormData.task.processInstanceId}', function (datas) {
@@ -80,11 +78,20 @@
             %>
             <div class="control-group">
                     <%-- 文本或者数字类型 --%>
-                <c:if test="${fp.type.name == 'string' || fp.type.name == 'long'}">
+                <c:if test="${fp.type.name == 'string' || fp.type.name == 'long' || fp.type.name == 'double'}">
                     <label class="control-label" for="${fp.id}">${fp.name}:</label>
                     <div class="controls">
                         <input type="text" id="${fp.id}" name="${fp.id}" data-type="${fp.type.name}"
                                value="${fp.value}" ${readonly} ${required} />
+                    </div>
+                </c:if>
+
+                    <%-- 大文本 --%>
+                <c:if test="${fp.type.name == 'bigtext'}">
+                    <label class="control-label" for="${fp.id}">${fp.name}:</label>
+                    <div class="controls">
+                        <textarea id="${fp.id}" name="${fp.id}"
+                                  data-type="${fp.type.name}" ${readonly} ${required}>${fp.value}</textarea>
                     </div>
                 </c:if>
 

@@ -51,13 +51,19 @@
         <property name="transactionManager" ref="transactionManager"/>
         <property name="databaseSchemaUpdate" value="true"/>
         <property name="jobExecutorActivate" value="false"/>
-        <property name="deploymentResources" value="classpath*:/ch09/counterSign.zip"></property>
+        <property name="deploymentResources">
+            <list>
+                <value>classpath*:/ch10/purchase-error-event-subprocess.zip</value>
+            </list>
+        </property>
 
         <!-- 自定义表单字段类型 -->
         <property name="customFormTypes">
             <list>
                 <bean class="com.activiti.form.JavascriptFormType"/>
                 <bean class="com.activiti.form.UsersFormType"/>
+                <bean class="com.activiti.form.DoubleFormType"/>
+                <bean class="com.activiti.form.BigtextFormType"/>
             </list>
         </property>
 
