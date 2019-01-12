@@ -1,5 +1,6 @@
 package com.activiti.controller.ch09;
 
+import com.activiti.controller.AbstractController;
 import com.activiti.util.SessionUtil;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -7,11 +8,15 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.task.Comment;
+import org.activiti.engine.task.Event;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +27,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/ch09")
-public class CommentController {
-    @Autowired
-    TaskService taskService;
-
-    @Autowired
-    IdentityService identityService;
-
-    @Autowired
-    HistoryService historyService;
-
+public class CommentController extends AbstractController {
     /**
      * 保存意见
      */
@@ -49,20 +45,46 @@ public class CommentController {
      */
     @RequestMapping(value = "/comment/list/{processInstanceId}", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> list(@PathVariable("processInstanceId") String processInstanceId) {
-        List<Comment> commentList = taskService.getProcessInstanceComments(processInstanceId);
+    public Map<String, Object> list(@PathVariable("processInstanceId") String processInstanceId,
+                                    @RequestParam("taskId") String taskId) {
+        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> commentAndEventsMap = new HashMap<>();
 
-        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery()
-                .processInstanceId(processInstanceId).list();
-        Map<String, String> taskNameMap = new HashMap<>();
-        for (HistoricTaskInstance historicTaskInstance : historicTaskInstanceList) {
-            taskNameMap.put(historicTaskInstance.getId(), historicTaskInstance.getName());
+        if (StringUtils.isNotBlank(processInstanceId)) {
+            List<Comment> commentList = taskService.getProcessInstanceComments(processInstanceId);
+            for (Comment comment : commentList) {
+                try {
+                    String commentId = PropertyUtils.getProperty(comment, "id").toString();
+                    commentAndEventsMap.put(commentId, comment);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            //提取任务名称
+            List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery()
+                    .processInstanceId(processInstanceId).list();
+            Map<String, String> taskNameMap = new HashMap<>();
+            for (HistoricTaskInstance historicTaskInstance : historicTaskInstanceList) {
+                taskNameMap.put(historicTaskInstance.getId(), historicTaskInstance.getName());
+            }
+            result.put("taskNameMap", taskNameMap);
         }
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("commentList", commentList);
-        map.put("taskNameMap", taskNameMap);
+        //查询所有类型的事件
+        if (StringUtils.isNotBlank(taskId)) {
+            List<Event> eventList = taskService.getTaskEvents(taskId);
+            for (Event event : eventList) {
+                try {
+                    String commentId = PropertyUtils.getProperty(event, "id").toString();
+                    commentAndEventsMap.put(commentId, event);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        result.put("events", commentAndEventsMap.values());
 
-        return map;
+        return result;
     }
 }

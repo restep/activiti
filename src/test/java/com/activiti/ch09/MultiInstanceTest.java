@@ -19,7 +19,7 @@ import java.util.Map;
  * @author restep
  * @date 2019/1/5
  */
-@ContextConfiguration("classpath:applicationContext-expression.xml")
+@ContextConfiguration("classpath:applicationContext.xml")
 public class MultiInstanceTest extends SpringActivitiTestCase {
     /**
      * Java Service多实例（是否顺序结果一样）

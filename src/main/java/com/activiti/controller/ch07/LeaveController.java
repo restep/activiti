@@ -1,10 +1,9 @@
 package com.activiti.controller.ch07;
 
+import com.activiti.controller.AbstractController;
 import com.activiti.entity.ch07.Leave;
 import com.activiti.service.ch07.LeaveService;
 import com.activiti.util.SessionUtil;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -33,15 +32,9 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/ch07")
-public class LeaveController {
+public class LeaveController extends AbstractController {
     @Autowired
     private LeaveService leaveService;
-
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private RuntimeService runtimeService;
 
     @RequestMapping(value = "/apply", method = RequestMethod.GET)
     public String createForm(Model model) {

@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author restep
  * @date 2019/1/2
  */
-@ContextConfiguration("classpath:applicationContext-expression.xml")
+@ContextConfiguration("classpath:applicationContext.xml")
 public class ExpressionWithSpringTest extends SpringActivitiTestCase {
     /**
      * 必须以test开头

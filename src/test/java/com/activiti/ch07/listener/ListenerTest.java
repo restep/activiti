@@ -18,7 +18,7 @@ import java.util.Map;
  * @author restep
  * @date 2019/1/2
  */
-@ContextConfiguration("classpath:applicationContext-expression.xml")
+@ContextConfiguration("classpath:applicationContext.xml")
 public class ListenerTest extends SpringActivitiTestCase {
     @Test
     @Deployment(resources = "ch07/listener/listener.bpmn")

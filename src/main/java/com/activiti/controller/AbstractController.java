@@ -1,29 +1,31 @@
 package com.activiti.controller;
 
-import com.activiti.util.ProcessEngineUtil;
 import org.activiti.engine.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author restep
  * @date 2018/12/24
  */
 public abstract class AbstractController {
+    @Autowired
     protected RepositoryService repositoryService;
-    protected RuntimeService runtimeService;
-    protected TaskService taskService;
-    protected HistoryService historyService;
-    protected IdentityService identityService;
-    protected ManagementService managementService;
-    protected FormService formService;
 
-    public AbstractController() {
-        ProcessEngine processEngine = ProcessEngineUtil.getInstance();
-        repositoryService = processEngine.getRepositoryService();
-        runtimeService = processEngine.getRuntimeService();
-        taskService = processEngine.getTaskService();
-        historyService = processEngine.getHistoryService();
-        identityService = processEngine.getIdentityService();
-        managementService = processEngine.getManagementService();
-        formService = processEngine.getFormService();
-    }
+    @Autowired
+    protected RuntimeService runtimeService;
+
+    @Autowired
+    protected TaskService taskService;
+
+    @Autowired
+    protected HistoryService historyService;
+
+    @Autowired
+    protected IdentityService identityService;
+
+    @Autowired
+    protected ManagementService managementService;
+
+    @Autowired
+    protected FormService formService;
 }
