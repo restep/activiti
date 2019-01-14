@@ -13,10 +13,9 @@
     <script type="text/javascript">
         var taskId = '${task.id}';
         var processInstanceId = '${task.processInstanceId}';
-        var ctx = ${ctx};
     </script>
     <script type="text/javascript" src="${ctx}/js/modules/ch12/events.js"></script>
-    <script type="text/javascript" src="${ctx}/js/modules/ch12/task-form.js"></script>
+    <script type="text/javascript" src="${ctx}/js/modules/ch12/taskForm.js"></script>
 </head>
 <body>
 <h3>
@@ -328,6 +327,224 @@
                 <legend>意见列表</legend>
                 <ol></ol>
             </fieldset>
+        </div>
+    </div>
+
+    <!-- 添加参与人对话框 -->
+    <div id="addPeopleModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addPeopleModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="addPeopleModalLabel">邀请参与人</h3>
+        </div>
+        <div class="modal-body">
+            <table id="participantsTable" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <button class="btn btn-small link-add"><i class="icon-plus"></i></button>
+                    </th>
+                    <th>人员</th>
+                    <th>职能</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="10">1</td>
+                    <td>
+                        <select class='user' style="width: 130px">
+                            <c:forEach items="${userList}" var="user">
+                                <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="link-type" style="width: 100px;">
+                            <option value="1">贡献人</option>
+                            <option value="2">项目经理</option>
+                            <option value="3">总经理</option>
+                            <option value="4">业务顾问</option>
+                            <option value="5">技术顾问</option>
+                            <option value="6">执行人</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-small link-remove"><i class="icon-remove"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <button id="sendAddParticipantsRequest" class="btn btn-primary">确定邀请</button>
+        </div>
+    </div>
+
+    <!-- 添加候选[人|组]对话框 -->
+    <div id="addCandidateModal" class="modal hide fade" tabindex="-1" role="dialog"
+         aria-labelledby="addCandidateModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="addCandidateModalLabel">添加候选[人|组]</h3>
+        </div>
+        <div class="modal-body">
+            <table id="candidateTable" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <button class="btn btn-small candidate-add"><i class="icon-plus"></i></button>
+                    </th>
+                    <th>候选类型</th>
+                    <th>人/组</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="10">1</td>
+                    <td>
+                        <select class='candidateType' style="width: 100px">
+                            <option value="user">候选人</option>
+                            <option value="group">候选组</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class='user' style="width: 130px">
+                            <c:forEach items="${userList}" var="user">
+                                <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                            </c:forEach>
+                        </select>
+                        <select class='group' style="width: 130px;display:none;">
+                            <c:forEach items="${groupList}" var="group">
+                                <option value="${group.id}">${group.name}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-small link-remove"><i class="icon-remove"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <button id="sendAddCandidateRequest" class="btn btn-primary">确定添加</button>
+        </div>
+    </div>
+
+    <!-- 添加子任务对话框 -->
+    <div id="addSubtaskModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addSubtaskModalLabel"
+         aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="addSubtaskModalLabel">添加子任务</h3>
+        </div>
+        <div class="modal-body">
+            <form id="subTaskForm" action="${ctx}/ch06/task/subtask/add/${task.id}" class="form-horizontal"
+                  method="post">
+                <div class="control-group">
+                    <label class="control-label" for="subTaskName">任务名称:</label>
+                    <div class="controls">
+                        <input type="text" name="taskName" class="required"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="subTaskName">任务描述:</label>
+                    <div class="controls">
+                        <textarea name="description" class="required"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                        <button type="submit" class="btn btn-primary">确定添加</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 添加附件对话框 -->
+    <div id="addAttachmentModal" class="modal hide fade" tabindex="-1" role="dialog"
+         aria-labelledby="addAttachmentModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="addAttachmentModalLabel">添加附件</h3>
+        </div>
+        <div class="modal-body">
+            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#file"><i class="icon-file"></i>文件</a></li>
+                <li><a data-toggle="tab" href="#web"><i class="icon-share"></i>Web资源</a></li>
+            </ul>
+            <div id="my-tab-content" class="tab-content">
+                <div id="file" class="tab-pane active">
+                    <form id="fileAttachmentForm" action="${ctx}/ch12/attachment/new/file" class="form-horizontal"
+                          method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="taskId" value="${task.id}"/>
+                        <input type="hidden" name="processInstanceId" value="${task.processInstanceId}"/>
+                        <div class="control-group">
+                            <label class="control-label" for="attachmentName">名称:</label>
+                            <div class="controls">
+                                <input type="text" name="attachmentName" class="required"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="attachmentDescription">描述:</label>
+                            <div class="controls">
+                                <textarea name="attachmentDescription" class="required"></textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="attachmentDescription">文件:</label>
+                            <div class="controls">
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                <button type="submit" class="btn btn-primary">创建</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="web" class="tab-pane">
+                    <form id="urlAttachmentForm" action="${ctx}/ch12/attachment/new/url" class="form-horizontal"
+                          method="post">
+                        <input type="hidden" name="taskId" value="${task.id}"/>
+                        <input type="hidden" name="processInstanceId" value="${task.processInstanceId}"/>
+                        <div class="control-group">
+                            <label class="control-label" for="attachmentDescription">URL:</label>
+                            <div class="controls">
+                                <input type="text" name="url"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="attachmentName">名称:</label>
+                            <div class="controls">
+                                <input type="text" name="attachmentName" class="required"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="attachmentDescription">描述:</label>
+                            <div class="controls">
+                                <textarea name="attachmentDescription" class="required"></textarea>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                <button type="submit" class="btn btn-primary">创建</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

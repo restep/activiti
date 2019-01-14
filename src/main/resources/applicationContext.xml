@@ -53,7 +53,7 @@
         <property name="jobExecutorActivate" value="false"/>
         <property name="deploymentResources">
             <list>
-                <value>classpath*:/ch10/purchase-error-event-subprocess.zip</value>
+                <value>classpath*:/ch10/purchase-subprocess.zip</value>
             </list>
         </property>
 

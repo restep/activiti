@@ -2,16 +2,12 @@ package com.activiti.controller.ch09;
 
 import com.activiti.controller.AbstractController;
 import com.activiti.util.SessionUtil;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Event;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,9 +39,9 @@ public class CommentController extends AbstractController {
     /**
      * 读取意见
      */
-    @RequestMapping(value = "/comment/list/{processInstanceId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/list", method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> list(@PathVariable("processInstanceId") String processInstanceId,
+    public Map<String, Object> list(@RequestParam("processInstanceId") String processInstanceId,
                                     @RequestParam("taskId") String taskId) {
         Map<String, Object> result = new HashMap<>();
         Map<String, Object> commentAndEventsMap = new HashMap<>();

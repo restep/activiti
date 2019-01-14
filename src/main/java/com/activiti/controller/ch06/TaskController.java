@@ -7,10 +7,7 @@ import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.task.Attachment;
-import org.activiti.engine.task.IdentityLink;
-import org.activiti.engine.task.IdentityLinkType;
-import org.activiti.engine.task.Task;
+import org.activiti.engine.task.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +40,29 @@ public class TaskController extends AbstractController {
         ModelAndView mav = new ModelAndView("ch06/taskList");
         User user = SessionUtil.getUserFromSession(session);
 
-        List<Task> taskList = taskService.createTaskQuery()
+        //读取直接分配给当前人或者已经签收的任务
+        List<Task> doingTaskList = taskService.createTaskQuery()
                 .taskCandidateOrAssigned(user.getId()).list();
+
+        //受邀任务
+        List<Task> involvedTaskList = taskService.createTaskQuery()
+                .taskInvolvedUser(user.getId()).list();
+
+        //合并任务(A邀请B involvedTaskList列表里也出现了A 需要根据taskId过滤)
+        List<Task> taskList = new ArrayList<>();
+        taskList.addAll(doingTaskList);
+        taskList.addAll(involvedTaskList);
+
+        Map<String, Task> map = new HashMap<>();
+        for (Task task : taskList) {
+            map.put(task.getId(), task);
+        }
+
+        taskList.clear();
+
+        for (Map.Entry<String, Task> entry : map.entrySet()) {
+            taskList.add(entry.getValue());
+        }
         mav.addObject("taskList", taskList);
         return mav;
     }
@@ -58,7 +77,7 @@ public class TaskController extends AbstractController {
      */
     @RequestMapping(value = "/task/claim/{taskId}")
     public String claim(@PathVariable("taskId") String taskId,
-                        @RequestParam(value = "nextDo") String nextDo,
+                        @RequestParam(value = "nextDo", required = false) String nextDo,
                         HttpSession session,
                         RedirectAttributes redirectAttributes) {
         User user = SessionUtil.getUserFromSession(session);
@@ -168,10 +187,33 @@ public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/complete/{taskId}")
     public String completeTask(@PathVariable("taskId") String taskId,
                                HttpServletRequest request,
-                               HttpSession session) {
-        // 设置当前操作人，对于调用活动可以获取到当前操作人
+                               HttpSession session,
+                               RedirectAttributes redirectAttributes) {
+        //设置当前操作人 对于调用活动可以获取到当前操作人
         User user = SessionUtil.getUserFromSession(session);
         identityService.setAuthenticatedUserId(user.getId());
+
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        //如果任务的流程定义任务key为空 则认为是手动创建的任务
+        if (StringUtils.isBlank(task.getTaskDefinitionKey())) {
+            taskService.complete(taskId);
+
+            return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/ch06/task/list";
+        }
+
+        //权限检查 任务的办理人和当前人不一致不能完成任务
+        if (!StringUtils.equals(task.getAssignee(), user.getId())) {
+            redirectAttributes.addFlashAttribute("error", "没有权限 不能完成任务");
+
+            return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/ch06/task/getForm/" + taskId;
+        }
+
+        //单独处理被委派的任务
+        if (DelegationState.PENDING == task.getDelegationState()) {
+            taskService.resolveTask(taskId);
+
+            return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/ch06/task/list";
+        }
 
         TaskFormData taskFormData = formService.getTaskFormData(taskId);
         String formKey = taskFormData.getFormKey();

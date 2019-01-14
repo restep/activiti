@@ -19,7 +19,7 @@ function readComments() {
 					}
 					var msg = v.message || v.fullMessage;
 					var content = eventHandler[v.action](v, user, msg);
-					var taskName = datas.taskNames ? datas.taskNames[v.taskId] : '';
+					var taskName = datas.taskNameMap ? datas.taskNameMap[v.taskId] : '';
 					content += "<span style='margin-left:1em;'></span>";
 
 					// 名称不为空时才显示
