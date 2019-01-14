@@ -7,7 +7,20 @@
     <%@ include file="/common/include-base-styles.jsp" %>
     <title>待办任务列表--chapter6</title>
 
-    <script src="${ctx}/js/common/jquery.js" type="text/javascript"></script>
+    <style type="text/css">
+        div.datepicker {
+            z-index: 10000;
+        }
+    </style>
+
+    <script type="text/javascript" src="${ctx}/js/common/jquery.js"></script>
+    <script type="text/javascript" src="${ctx}/js/common/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${ctx}/js/common/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
 </head>
 <body>
 <c:if test="${not empty message}">
@@ -19,6 +32,12 @@
         }, 5000);
     </script>
 </c:if>
+
+<form class="form-search" method="post">
+    任务名称：<input type="text" name="taskName" value="${taskName}" class="input-medium search-query">
+    <button type="submit" class="btn">查询</button>
+</form>
+
 <table width="100%" class="table table-bordered table-hover table-condensed">
     <thead>
     <tr>
@@ -33,7 +52,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${taskList}" var="task">
+    <c:forEach items="${page.result}" var="task">
         <tr>
             <td>${task.id }</td>
             <td>${task.name }</td>
@@ -71,5 +90,55 @@
     </c:forEach>
     </tbody>
 </table>
+
+<tags:pagination page="${page}" paginationSize="${page.pageSize}"/>
+
+<!-- 添加子任务对话框 -->
+<div id="newTaskModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="newTaskModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="newTaskModalLabel">新任务</h3>
+    </div>
+    <div class="modal-body">
+        <form id="newTaskForm" action="${ctx}/ch06/task/new" class="form-horizontal" method="post">
+            <div class="control-group">
+                <label class="control-label" for="subTaskName">任务名称:</label>
+                <div class="controls">
+                    <input type="text" name="taskName" class="required"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="description">任务描述:</label>
+                <div class="controls">
+                    <textarea name="description" class="required"></textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="priority">优先级:</label>
+                <div class="controls">
+                    <select name="priority">
+                        <option value="0">低</option>
+                        <option value="50">中</option>
+                        <option value="100">高</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="dueDate">到期日:</label>
+                <div class="controls">
+                    <input type="text" name="dueDate" data-date-format="yyyy-mm-dd" class="datepicker required"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button type="submit" class="btn btn-primary">创建</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

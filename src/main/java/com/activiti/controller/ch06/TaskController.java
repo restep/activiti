@@ -1,6 +1,8 @@
 package com.activiti.controller.ch06;
 
 import com.activiti.controller.AbstractController;
+import com.activiti.util.Page;
+import com.activiti.util.PageUtil;
 import com.activiti.util.SessionUtil;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.form.TaskFormData;
@@ -36,34 +38,64 @@ import java.util.Map;
 @RequestMapping(value = "/ch06")
 public class TaskController extends AbstractController {
     @RequestMapping(value = "/task/list")
-    public ModelAndView taskList(HttpSession session) {
+    public ModelAndView taskList(@RequestParam(value = "taskName", required = false) String taskName,
+                                 HttpServletRequest request,
+                                 HttpSession session) {
         ModelAndView mav = new ModelAndView("ch06/taskList");
         User user = SessionUtil.getUserFromSession(session);
 
-        //读取直接分配给当前人或者已经签收的任务
-        List<Task> doingTaskList = taskService.createTaskQuery()
-                .taskCandidateOrAssigned(user.getId()).list();
+        if (StringUtils.equals("restep", user.getId())) {
+            //读取直接分配给当前人或者已经签收的任务
+            List<Task> doingTaskList = taskService.createTaskQuery()
+                    .taskCandidateOrAssigned(user.getId()).list();
 
-        //受邀任务
-        List<Task> involvedTaskList = taskService.createTaskQuery()
-                .taskInvolvedUser(user.getId()).list();
+            //受邀任务
+            List<Task> involvedTaskList = taskService.createTaskQuery()
+                    .taskInvolvedUser(user.getId()).list();
 
-        //合并任务(A邀请B involvedTaskList列表里也出现了A 需要根据taskId过滤)
-        List<Task> taskList = new ArrayList<>();
-        taskList.addAll(doingTaskList);
-        taskList.addAll(involvedTaskList);
+            //合并任务(A邀请B involvedTaskList列表里也出现了A 需要根据taskId过滤)
+            List<Task> taskList = new ArrayList<>();
+            taskList.addAll(doingTaskList);
+            taskList.addAll(involvedTaskList);
 
-        Map<String, Task> map = new HashMap<>();
-        for (Task task : taskList) {
-            map.put(task.getId(), task);
+            Map<String, Task> map = new HashMap<>();
+            for (Task task : taskList) {
+                map.put(task.getId(), task);
+            }
+
+            taskList.clear();
+
+            for (Map.Entry<String, Task> entry : map.entrySet()) {
+                taskList.add(entry.getValue());
+            }
+            mav.addObject("taskList", taskList);
         }
 
-        taskList.clear();
+        Page<Task> page = new Page<>(PageUtil.PAGE_SIZE);
+        int[] pageParams = PageUtil.init(page, request);
+        NativeTaskQuery nativeTaskQuery = taskService.createNativeTaskQuery();
 
-        for (Map.Entry<String, Task> entry : map.entrySet()) {
-            taskList.add(entry.getValue());
+        //过滤条件
+        String filters = "";
+        if (StringUtils.isNotBlank(taskName)) {
+            filters += " and RES.NAME_ like #{taskName}";
+            nativeTaskQuery.parameter("taskName", "%" + taskName + "%");
+            mav.addObject("taskName", taskName);
         }
-        mav.addObject("taskList", taskList);
+
+        //当前人在候选人或者候选组范围之内
+        String sql = "select distinct RES.* from ACT_RU_TASK RES left join ACT_RU_IDENTITYLINK I on I.TASK_ID_ = RES.ID_ WHERE " +
+                " ( RES.ASSIGNEE_ = #{userId}" +
+                " or (RES.ASSIGNEE_ is null  and ( I.USER_ID_ = #{userId} or I.GROUP_ID_ IN (select G.GROUP_ID_ from ACT_ID_MEMBERSHIP G where G.USER_ID_ = #{userId} ) )" +
+                ") )" + filters + " order by RES.CREATE_TIME_ desc";
+        nativeTaskQuery.sql(sql).parameter("userId", user.getId());
+
+        List<Task> tasks = nativeTaskQuery.listPage(pageParams[0], pageParams[1]);
+        long totalCount = nativeTaskQuery.sql("select count(*) from (" + sql + ")").count();
+        page.setResult(tasks);
+        page.setTotalCount(totalCount);
+
+        mav.addObject("page", page);
         return mav;
     }
 

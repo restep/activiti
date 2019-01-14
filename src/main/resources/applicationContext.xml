@@ -57,6 +57,9 @@
             </list>
         </property>
 
+        <!-- 生成流程图的字体 -->
+        <property name="activityFontName" value="宋体"/>
+
         <!-- 自定义表单字段类型 -->
         <property name="customFormTypes">
             <list>
@@ -72,6 +75,18 @@
             <list>
                 <bean class="com.activiti.form.MyFormEngine"></bean>
             </list>
+        </property>
+
+        <!-- 自定义MyBatis映射接口 -->
+        <property name="customMybatisMappers">
+            <set>
+                <value>com.activiti.dao.ch13.TaskQueryMapper</value>
+            </set>
+        </property>
+
+        <!-- 自定义的流程图生成器 -->
+        <property name="processDiagramGenerator">
+            <bean class="com.activiti.util.MyProcessDiagramGenerator"/>
         </property>
     </bean>
 
