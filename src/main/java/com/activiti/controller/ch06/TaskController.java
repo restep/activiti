@@ -84,6 +84,23 @@ public class TaskController extends AbstractController {
         }
 
         //当前人在候选人或者候选组范围之内
+        /*
+        select distinct RES.* from ACT_RU_TASK RES left join ACT_RU_IDENTITYLINK I on I.TASK_ID_ = RES.ID_
+        where
+        (
+            RES.ASSIGNEE_ = 'henry' or
+            (
+                RES.ASSIGNEE_ is null  and
+                (
+                    I.USER_ID_ = 'henry' or I.GROUP_ID_ IN
+                    (
+                        select G.GROUP_ID_ from ACT_ID_MEMBERSHIP G where G.USER_ID_ = 'henry'
+                    )
+                )
+             )
+        )
+        order by RES.CREATE_TIME_ desc
+         */
         String sql = "select distinct RES.* from ACT_RU_TASK RES left join ACT_RU_IDENTITYLINK I on I.TASK_ID_ = RES.ID_ WHERE " +
                 " ( RES.ASSIGNEE_ = #{userId}" +
                 " or (RES.ASSIGNEE_ is null  and ( I.USER_ID_ = #{userId} or I.GROUP_ID_ IN (select G.GROUP_ID_ from ACT_ID_MEMBERSHIP G where G.USER_ID_ = #{userId} ) )" +
@@ -91,7 +108,7 @@ public class TaskController extends AbstractController {
         nativeTaskQuery.sql(sql).parameter("userId", user.getId());
 
         List<Task> tasks = nativeTaskQuery.listPage(pageParams[0], pageParams[1]);
-        long totalCount = nativeTaskQuery.sql("select count(*) from (" + sql + ")").count();
+        long totalCount = nativeTaskQuery.sql(sql).list().size();
         page.setResult(tasks);
         page.setTotalCount(totalCount);
 
