@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class AbstractController {
     @Autowired
+    protected ProcessEngineConfiguration processEngineConfiguration;
+
+    @Autowired
     protected RepositoryService repositoryService;
 
     @Autowired
@@ -24,8 +27,8 @@ public abstract class AbstractController {
     protected IdentityService identityService;
 
     @Autowired
-    protected ManagementService managementService;
+    protected FormService formService;
 
     @Autowired
-    protected FormService formService;
+    protected ManagementService managementService;
 }

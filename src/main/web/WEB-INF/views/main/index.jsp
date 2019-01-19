@@ -19,9 +19,9 @@
         }
     </style>
 
-    <script src="${ctx }/js/common/jquery.js" type="text/javascript"></script>
-    <script src="${ctx }/js/common/bootstrap.min.js" type="text/javascript"></script>
-    <script src="${ctx }/js/modules/main/main.js" type="text/javascript"></script>
+    <script src="${ctx}/js/common/jquery.js" type="text/javascript"></script>
+    <script src="${ctx}/js/common/bootstrap.min.js" type="text/javascript"></script>
+    <script src="${ctx}/js/modules/main/main.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -46,12 +46,24 @@
                             <li><a href="${ctx}/ch07/task/list" rel=''>待办任务</a></li>
                         </ul>
                     </li>
-                    <li><a href="${ctx}/ch06/task/list" rel=""><i class="icon-th-list icon-black"></i>任务列表</a></li>
+
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i
+                                class="icon-th-large icon-black"></i>运行中<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" rel="${ctx}/ch06/task/list"><i class="icon-th-list icon-black"></i>任务列表</a></li>
+                            <li><a href="#" rel="${ctx}/ch13/execution/list"><i class="icon-th-list icon-black"></i>参与的流程</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" rel="${ctx}/ch13/history/process/finished/list"><i class="icon-lock icon-black"></i>已归档</a>
+                    </li>
+
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i
                                 class="icon-th-large icon-black"></i>管理<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="${ctx}/ch05/processList" rel=''>流程定义</a></li>
+                            <li><a href="#" rel='${ctx}/ch13/query/task/running'>运行中任务(CustomSql)</a></li>
                         </ul>
                     </li>
                 </ul>
